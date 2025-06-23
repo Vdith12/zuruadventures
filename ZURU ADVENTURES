@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zurhu Adventures - Explore the World with Us</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+         /* Header Styles */
+        header {
+            position: relative; /* Needed for absolute positioning of images */
+            background-color: black; /* Fallback if images fail to load */
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            overflow: hidden; /* Clip images within the header */
+        }
+
+        .header-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .header-slide.active {
+            opacity: 1;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7); /* Overlay for better text readability */
+            z-index: 1; /* Ensure it's above the images */
+        }
+
+        .header-content {
+            position: relative; /* To be above the overlay */
+            z-index: 2;
+        }
+
+        .logo {
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color:#355b24;
+            padding: 15px 0;
+            position: static;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 9px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #f39c12;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        section {
+            padding: 50px 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2c3e50;
+            font-size: 2rem;
+        }
+
+        /* Tours Section */
+        .tours {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .tour-card {
+            width: 30%;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .tour-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .tour-info {
+            padding: 20px;
+        }
+
+        .tour-info h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .tour-info p {
+            margin-bottom: 15px;
+            color: #7f8c8d;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #f39c12;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #e67e22;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .about-img {
+            width: 50%;
+            border-radius: 8px;
+        }
+
+        .about-text {
+            width: 50%;
+        }
+
+        /* testimonial */
+        .testimonial {
+            background-color: #ecf0f1;
+            padding: 50px 0;
+        }
+
+        .testimonial-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .testimonial {
+            width: 30%;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .testimonial img {
+            width: 50px;
+            height: 50px;
+            border-radius: 30%;
+            object-fit: fill;
+            margin-right: 15px;
+            float: left;
+        }
+
+        .testimonial-text {
+            overflow: hidden;
+        }
+
+        .testimonial-text p {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-text .name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* Contact Section */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-group textarea {
+            height: 150px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .social-links {
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #f39c12;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tour-card, .testimonial {
+                width: 48%;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-img, .about-text {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tour-card, .testimonial {
+                width: 100%;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 4px 0;
+            }
+        }
+
+         /* Merch and Other Services Styles */
+        #merch-services h2 {
+            /* Inherits from the general h2 style */
+        }
+
+        #merch-services > div { /* Style the container div */
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        #merch-services h3 {
+            margin-top: 50px;
+            /* You can add more specific styling if needed */
+        }
+
+        .merch-services-container {
+            display: flex;
+            gap: 40px;
+            padding: 0 20px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+        }
+
+        .merch-slide {
+            flex: 0 0 auto;
+            width: 200px; /* Adjust as needed */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            scroll-snap-align: start;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .merch-slide img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .merch-slide h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .merch-slide p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .services-slide {
+            flex: 0 0 auto;
+            width: 300px; /* Adjust as needed */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            scroll-snap-align: start;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .services-slide h3 {
+            color: #f39c12;
+            margin-bottom: 10px;
+            text-decoration: underline; /* Underline the service headings */
+            font-weight: bold; /* Make the service headings bold */
+        }
+
+        .services-slide p {
+            color: #7f8c8d;
+        }
+
+        /* Gallery Section Styles */
+        .gallery {
+            padding: 50px 0;
+            background-color: #f9f9f9;
+        }
+
+        .gallery h2 {
+            /* Inherits from the general h2 style */
+        }
+
+        .gallery > p { /* Style the gallery description paragraph */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-gap: 15px;
+            padding: 0 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            aspect-ratio: 1/1;
+            cursor: pointer; /* Indicate it's clickable for lightbox */
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <img src="ZUHRU_LOGO.png" class="logo">
+            <h1>Zurhu Adventures</h1>
+            <p class="tagline">Experience and Embrace the Journey</p>
+            <a href="#tours" class="btn">Explore Tours</a>
+        </div>
+        <div class="header-slide active" style="background-image: url('zebra.jpg');"></div>
+        <div class="header-slide" style="background-image: url('mountain.jpg');"></div>
+        <div class="header-slide" style="background-image: url('bird.jpg');"></div>
+	<div class="header-slide" style="background-image: url('lions.jpg');"></div>
+	<div class="header-slide" style="background-image: url('girraffe.jpg');"></div>
+	<div class="header-slide" style="background-image: url('mountain2.jpg');"></div>
+	<div class="header-slide" style="background-image: url('mountain2.jpg');"></div>
+	<div class="header-slide" style="background-image: url('elephant.jpg');"></div>
+	<div class="header-slide" style="background-image: url('lions2.jpg');"></div>
+	<div class="header-slide" style="background-image: url('king.jpg');"></div>
+        </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#tours">Tours</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#merch-services">Merch &Other Services</a></li>
+        </ul>
+    </nav>
+	<script>
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.header-slide');
+
+        function showSlides() {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].classList.add('active');
+            setTimeout(showSlides, 5000);
+        }
+
+        showSlides();
+    </script>
+
+    <main class="container">
+        <section id="about">
+            <h2>About Zurhu Expedition Adventures</h2>
+            <div class="about-content">
+                
+                <div class="about-text">
+<section style="background-color: #f76114; padding: 20px; border-radius: 10px; color: white;">
+
+                    <p style="font-size: 16px; line-height: 1.6;">
+    <strong>Zurhu Expedition Adventures</strong> is a dynamic travel and tourism company based in Nairobi, Kenya. We specialize in road trips, private tours, adventure safaris, and customized travel packages across Kenya and East Africa. 
+	Formerly known as Zuru Adventures, we rebranded to better reflect our expanded services and international ambitions. Our mission is to help you explore hidden gems, connect with nature, and create unforgettable memories.
+	 Whether you're a solo traveler, a couple, family, or group, we have something tailored just for you.
+	 We also organize charity events, themed hikes, and cultural experiences.Let's turn your wanderlust into reality with Zuru – where every trip is a new story!</p>
+
+
+                    <a href="#contact" class="btn">Contact Us</a>
+                </div>
+            </div>
+        </section>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming and Successful Events</title>
+    <style>
+        #tours {
+            font-family: sans-serif;
+            padding: 20px;
+            text-align: center;
+            position: relative; /* For positioning the buttons */
+        }
+
+        .tours-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            margin-top: 20px;
+            width: 100%;
+            scroll-behavior: smooth; /* For smooth scrolling with buttons */
+        }
+
+        .tour-card {
+            flex: 0 0 80%; /* Adjust as needed for visible card width */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            scroll-snap-align: start;
+            transition: transform 0.3s ease-in-out;
+            cursor: pointer;
+            min-width: 0;
+        }
+
+        .tour-card:hover {
+            transform: scale(1.02);
+        }
+
+        .tour-img {
+            width: 100%;
+            height: 200px; /* Standard height for all images */
+            object-fit: cover;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            display: block;
+            cursor: zoom-in; /* Indicate it's clickable */
+        }
+
+        .tour-info {
+            padding: 15px;
+            text-align: left;
+        }
+
+        .tour-info h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .tour-info p {
+            margin-bottom: 10px;
+            color: #666;
+            display: none; /* Initially hide */
+        }
+
+        .tour-info p.visible {
+            display: block; /* Show */
+        }
+
+        .tour-info .price {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .tour-info .btn {
+            display: inline-block;
+            padding: 8px 15px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .tour-info .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            padding: 0;
+            font-size: 0.9em;
+        }
+
+        .read-more-btn:hover {
+            text-decoration: underline;
+        }
+
+        .slide-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .slide-button:hover {
+            opacity: 1;
+        }
+
+        .slide-button.left {
+            left: 10px;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .slide-button.right {
+            right: 10px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+        }
+
+        .modal-details {
+            color: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+   <section id="tours">
+        <h2>UPCOMING AND SUCCESSFUL EVENTS</h2>
+
+        <div class="tours-container">
+<div class="tour-card">
+       <img src="SEASON TWO SUSWA.jpg" class="tour-img" alt="Vintage Buddies" onclick="openModal('SEASON TWO SUSWA.jpg', 'SEASON TWO SUSWA', 'Twende Suswa SGR leisure Trip SEASON 2! Join us for a day of season two fun at Namanga border Merch Edition on the 27th July 2025 charges Ksh:2,599. This exclusive event includes:✔ transport to and fro from Meeting point, ✔a delicious lunch,✔Visit Namanga border, ✔Professional Border photography,✔Energetic Zumba sessions ✔ a special birthday cake for our July babies! . We\'ll be meeting at Kencom Opposite International House. Date: Sunday 27th JULY 2025. Cost: ', 'Ksh2,999')">
+                        
+                        <div class="tour-info">
+                                <h3>NAMANGA BORDER SEASON 2</h3>
+                                <p>VINTAGE BUDDIES X POOL PARTY Nanyuki Edition </p>
+                        <p>🔥 Limited slots available – Don’t miss out! 🔥 </p>
+                <p><strong>Cost Covers:</strong>
+
+                ✔ Transport to & from
+                 ✔Lunch
+        
+                ✔ Visith Namanga Border 
+                ✔ Professional Border photography 
+                ✔ Energetic Zumba sessions
+                ✔ A special birthday cake for our July babies 
+                
+                
+               
+                   <p>BOOKINGS:
+
+                MPESA paybill
+                Business Number:<strong> 542542</strong>
+                Account Number:<strong> 516286 </strong>
+                BOOK WITH <strong> Ksh.1000</strong>
+                </p>
+                  <p>𝗖𝗔𝗡𝗖𝗘𝗟𝗟𝗔𝗧𝗜𝗢𝗡_𝗣𝗢𝗟𝗜𝗖𝗬
+                √We allow Cancelling 7 days before the event.
+                √Cancelling the trip 7days to the safari day without a replacement will result in NO REFUND the deposit will be retained to cater for third party expenses.
+                √No Refund for Failure to Attend</p>
+                                <a href="#" class="btn"><STRONG>COST: Ksh2,999</STRONG></a>
+                        </div>
+                </div>
+
+<div class="tour-card">
+                        <img src="SEASON 2 NAMANGA MERCH EDITION.jpg" class="tour-img" alt="Vintage Buddies" onclick="openModal('SEASON 2 NAMANGA MERCH EDITION.jpg', 'SEASON 2 NAMANGA MERCH EDITION', 'SEASON 2 NAMANGA MERCH EDITION! Join us for a day of season two fun at Namanga border Merch Edition on the 27th July 2025 charges Ksh:2,599. This exclusive event includes:✔ transport to and fro from Meeting point, ✔a delicious lunch,✔Visit Namanga border, ✔Professional Border photography,✔Energetic Zumba sessions ✔ a special birthday cake for our July babies! . We\'ll be meeting at Kencom Opposite International House. Date: Sunday 27th JULY 2025. Cost: ', 'Ksh2,999')">
+                        
+                        <div class="tour-info">
+                                <h3>NAMANGA BORDER SEASON 2</h3>
+                                <p>VINTAGE BUDDIES X POOL PARTY Nanyuki Edition </p>
+                        <p>🔥 Limited slots available – Don’t miss out! 🔥 </p>
+                <p><strong>Cost Covers:</strong>
+
+                ✔ Transport to & from
+                 ✔Lunch
+        
+                ✔ Visith Namanga Border 
+                ✔ Professional Border photography 
+                ✔ Energetic Zumba sessions
+                ✔ A special birthday cake for our July babies 
+                
+                
+               
+                   <p>BOOKINGS:
+
+                MPESA paybill
+                Business Number:<strong> 542542</strong>
+                Account Number:<strong> 516286 </strong>
+                BOOK WITH <strong> Ksh.1000</strong>
+                </p>
+                  <p>𝗖𝗔𝗡𝗖𝗘𝗟𝗟𝗔𝗧𝗜𝗢𝗡_𝗣𝗢𝗟𝗜𝗖𝗬
+                √We allow Cancelling 7 days before the event.
+                √Cancelling the trip 7days to the safari day without a replacement will result in NO REFUND the deposit will be retained to cater for third party expenses.
+                √No Refund for Failure to Attend</p>
+                                <a href="#" class="btn"><STRONG>COST: Ksh2,999</STRONG></a>
+                        </div>
+                </div>
+
+                <div class="tour-card">
+                        <img src="vintage.jpg" class="tour-img" alt="Vintage Buddies" onclick="openModal('vintage.jpg', 'VINTAGE BUDDIES', 'VINTAGE BUDDIES X POOL PARTY Nanyuki Edition! Join us for a day of vintage vibes and poolside fun in scenic Nanyuki. This exclusive event includes transport to and fro from Kencom, a delicious lunch, refreshing soft drinks, entry fees to the venue, a lively pool party, epic photography to capture the memories, energetic Zumba sessions, complimentary mineral water, and a special birthday cake for our May babies! Please note that swimming, sauna/steam bath access, hard and soft drinks beyond what\'s included, and personal effects are not covered. We\'ll be meeting at Kencom Opposite International House. Date: Sunday 16th MAY 2025. Cost: KES 2,999/-', 'Ksh2,999')">
+                        <div class="tour-info">
+                                <h3>VINTAGE BUDDIES</h3>
+                                <p>VINTAGE BUDDIES X POOL PARTY Nanyuki Edition </p>
+                        <p>🔥 Limited slots available – Don’t miss out! 🔥 </p>
+                <p><strong>Cost Covers:</strong>
+
+                ✔ Transport to & from ✔Lunch ✔ Soft Drink
+                ✔ Entry fees 
+                ✔ Pool Party 
+                ✔ Epic photography
+                ✔ Zumba 
+                ✔Mineral water
+                ✔  May Babies Birthday Cake 
+                 </p>
+                <p><strong>Exclusives</strong> ❌ Swimming 
+                ❌ Sauna /  Steam Bath
+                ❌ Drinks (Hard & Soft) 🍻🥤
+                ❌ Personal effects
+                </p>
+                   <p>BOOKINGS:
+
+                MPESA paybill
+                Business Number:<strong> 542542</strong>
+                Account Number:<strong> 516286 </strong>
+                BOOK WITH <strong> Ksh.999</strong>
+                </p>
+                  <p>𝗖𝗔𝗡𝗖𝗘𝗟𝗟𝗔𝗧𝗜𝗢𝗡_𝗣𝗢𝗟𝗜𝗖𝗬
+                √We allow Cancelling 7 days before the event.
+                √Cancelling the trip 7days to the safari day without a replacement will result in NO REFUND the deposit will be retained to cater for third party expenses.
+                √No Refund for Failure to Attend</p>
+                                <a href="#" class="btn"><STRONG>COST: Ksh2,999</STRONG></a>
+                        </div>
+                </div>
+<div class="tour-card slide">
+                        <img src="machakos.jpg" class="tour-img" alt="CHILDREN HOME VISIT" onclick="openModal('machakos.jpg', 'CHILDREN HOME VISIT', 'ZURHU ADVENTURES FAMILY Invites all of you to: A Charity Event to Village of Hope Children\'s home, Machakos County. ACTIVITIES WILL INCLUDE: * General Cleaning * Laundry * Washing Utensils * Counseling and Mentorship * Team Building * Networking and Socializing * Cake Cutting * Dancing and Great Music * Cooking and Eating Together . DONATIONS NEEDED: * Stationery * Food * Clothes Any other items to support the children FOR SUPPORT: LIPA NA MPESA PAYBILL: 542542 ACCOUNT: 516286. DATE: 16th June 2025 (Sunday) TIME: 7:00 AM - 4:00 PM -', 'Ksh.2,000')">
+                        <div class="tour-info">
+                                <h3>CHILDREN HOME VISIT</h3>
+                                <p>ZURHU ADVENTURES FAMILY
+                                Invites all of you to:
+                                A Charity Event to Village of Hope Children's home, Machakos County.
+                                </p>
+                        <p>ACTIVITIES WILL INCLUDE:
+
+                * General Cleaning
+                * Laundry
+                * Washing Utensils
+                * Counseling and Mentorship
+                * Team Building
+                * Networking and Socializing
+                * Cake Cutting
+                * Dancing and Great Music
+                * Cooking and Eating Together </p>
+                <p>DONATIONS NEEDED:
+
+                * Stationery
+                * Food
+                * Clothes
+                Any other items to support the children </p>
+                <p><strong>DATE: 16th  June  2025 (Sunday)
+                TIME: 7:00 AM - 4:00 PM
+
+                MEETING POINT: Kenya National Archives (opposite Hilton Hotel, near Kencom Stage)
+                </strong></p>
+                <p><strong>FOR SUPPORT:
+
+                LIPA NA MPESA
+                PAYBILL: 542542
+                ACCOUNT: 516286 </strong></p>
+
+
+
+                                <a href="#" class="btn"><strong>Ksh.2,000</strong></a>
+                        </div>
+                </div>
+
+<div class="tour-card slide">
+    <img src="Arusha.jpg" class="tour-img" alt="ARUSHA X MOSHI (SAFARI YA BONGO)" onclick="openModal('Arusha.jpg', 'ARUSHA X MOSHI (SAFARI YA BONGO)', 'Embark on an exciting 3-day getaway with ARUSHA X MOSHI (SAFARI YA BONGO)! Experience the beauty of Tanzania for only Ksh 18,000. Dates: Sat 29th Nov – Mon 1st Dec. PACKAGE INCLUDES: ✔ Round-trip transport in a comfy tour bus (3 days) ✔ 2 nights\' hotel accommodation in Moshi ✔ Half-board meal plan (Breakfast & Dinner) ✔ Entrance to Kikuletwa Hot Springs ✔ Excursion to Marangu Waterfalls ✔ Guided tours in Moshi & Arusha ✔ Visit to Arusha Cultural Heritage Centre ✔ Natural fish spa experience ✔ All border/Comesa charges ✔ Professional trip photography ✔ Bottled drinking water ✔ Complimentary birthday cake for Nov/Dec babies  ---  ITINERARY  DAY 1: NAIROBI – MOSHI  Assemble at International House (Opp. Hilton Hotel) by 5:00AM sharp  Depart via Emali – Loitoktok – Tarakea – Marangu – Moshi  Scenic drive with stopovers for photos (Mt. Kilimanjaro & Amboseli views)  Explore the breathtaking Marangu Waterfalls  Hotel check-in followed by dinner  Optional: Explore Moshi’s vibrant nightlife  ---  DAY 2: MOSHI – KIKULETWA – MOSHI  Early wake-up at 6:30AM and breakfast  Depart for Kikuletwa Hot Springs by 9:00AM  Enjoy a refreshing swim & fish spa at the springs  Return to Moshi in the afternoon  Dinner at 7:00PM  Optional: Night out in Moshi  ---  DAY 3: MOSHI – ARUSHA – NAIROBI  Wake-up at 7:00AM, breakfast at 8:30AM  Depart for Arusha: City tour & visit to Cultural Heritage Centre  12:00PM: Lunch in Arusha (self-sponsored)  1:00PM: Begin journey back to Nairobi via Namanga  Arrival in Nairobi estimated between 8:00PM – 9:00PM  ---  WHAT TO CARRY:  Swimming attire  Personal items  Face mask  Snacks for the road  IMPORTANT DOCUMENTS:  National ID  Kenyan Passport or Temporary Permit (Ecitizen – Ksh 350)  Yellow Fever Certificate (Available at border – Ksh 1,500)  ---  BOOK YOUR SLOT TODAY! WhatsApp / Call: 0792 516 286 | 0710 843 004 Email: zuruadventuresafaris@gmail.com  PAYMENT DETAILS: MPESA Paybill: 542542 Account Number: 516286 Deposit: Ksh 5,000/= Flexible Lipa Mos Mos Plan Available', 'Ksh 18,000')">
+    <div class="tour-info">
+        <h3>ARUSHA X MOSHI (SAFARI YA BONGO)</h3>
+        <p>3-Day Getaway @ Only Ksh 18,000/=</p>
+        <p>Dates: Sat 29th Nov – Mon 1st Dec</p>
+        <p>
+            <strong>PACKAGE INCLUDES:</strong><br>
+            ✔ Round-trip transport in a comfy tour bus (3 days)<br>
+            ✔ 2 nights' hotel accommodation in Moshi<br>
+            ✔ Half-board meal plan (Breakfast & Dinner)<br>
+            ✔ Entrance to Kikuletwa Hot Springs<br>
+            ✔ Excursion to Marangu Waterfalls<br>
+            ✔ Guided tours in Moshi & Arusha<br>
+            ✔ Visit to Arusha Cultural Heritage Centre<br>
+            ✔ Natural fish spa experience<br>
+            ✔ All border/Comesa charges<br>
+            ✔ Professional trip photography<br>
+            ✔ Bottled drinking water<br>
+            ✔ Complimentary birthday cake for Nov/Dec babies
+        </p>
+        <a href="#" class="btn"><strong>Ksh 18,000</strong></a>
+    </div>
+</div>
+
+
+                <div class="tour-card slide">
+                        <img src="mombasa.jpg" class="tour-img" alt="Twende Mombasa" onclick="openModal('mombasa.jpg', 'TWENDE MOMBASA', '🌴 TWENDE MOMBASA! – SUN, SAND & ADVENTURE AWAITS! 🌊☀. Get ready for the ultimate coastal getaway with Zurhu Expedition Adventures! This is your chance to escape the ordinary and dive into the magic of Mombasa—where the sun kisses the ocean, the breeze carries laughter, and every moment is a memory in the making! 🔥 What to Expect: ✅ Breathtaking Beaches – Sink your feet into the white sands of Diani, Nyali, or Bamburi! ✅ Thrilling Adventures – Snorkeling, jet skiing, camel rides—Mombasa is a playground for the wild at heart! ✅ Rich Swahili Culture – Explore Fort Jesus, Old Town, and experience authentic coastal vibes. ✅ Unforgettable Nightlife – Dance under the stars and enjoy the best coastal entertainment! ✅ Delicious Coastal Delicacies – Treat yourself to fresh seafood, viazi karai, mahamri, and the legendary Swahili biryani! 🎟 Limited slots available! Don’t be left behind while others make memories. Book your seat NOW and let\'s #TwendeMombasa in style!. 💰 PAYMENT DETAILS: 📌 Lipa na Mpesa 🔹 Paybill: 542542 🔹 Account: 516286', 'IT WAS A SUCCESS')">
+                        <div class="tour-info">
+                                <h3>TWENDE MOMBASA</h3>
+                                <p>🌴 TWENDE MOMBASA! – SUN, SAND & ADVENTURE AWAITS! 🌊☀.</p>
+                        <p>
+                📅 Dates: Saturday 19th - Monday 21st April 2025
+
+                What's Included:
+
+                ✔ SGR tickets
+                ✔ SGR transfers
+                ✔ Accommodation (, per person sharing)
+                ✔ Meals on half board
+                ✔ Unlimited access to swimming pool
+                ✔ Access to the beach
+                ✔ Unlimited professional photography
+                ✔ Team-building activities
+                ✔ 5-minute walk to the beach
+                .</p>
+                <P>Optional Add-ons:
+                ➕ Yacht ride
+                ➕ Glass boat marine tour </P>
+                <P>Booking Details:
+                • Reserve Your Spot Today:
+                • Paybill: 542542
+                • Account Number: 516286</P>
+                  <p>𝗖𝗔𝗡𝗖𝗘𝗟𝗟𝗔𝗧𝗜𝗢𝗡_𝗣𝗢𝗟𝗜𝗖𝗬
+                √We allow Cancelling 7 days before the event.
+                √Cancelling the trip 7days to the safari day without a replacement will result in NO REFUND the deposit will be retained to cater for third party expenses.
+                √No Refund for Failure to Attend</p>
+
+
+                                <a href="#" class="btn">IT WAS A SUCCESS</a>
+                        </div>
+                </div>
+
+
+
+
+
+
+                
+
+                <div class="tour-card slide">
+                        <img src="camp.jpg" class="tour-img" alt="Camp Ndunda" onclick="openModal('camp.jpg', 'CAMP NDUNDA', 'No fear, only fun. From thrilling outdoor activities to serene nature walks, Camp Ndunda Falls offers a plethora of adventures tailored to your desires. IT WAS A SUCCESS', 'View Details')">
+                        <div class="tour-info">
+                                <h3>CAMP NDUNDA</h3>
+                                <p>No fear, only fun. From thrilling outdoor activities to serene nature walks, Camp Ndunda Falls offers a plethora of adventures tailored to your desires.</p>
+                                <a href="#" class="btn">View Details</a>
+                        </div>
+                </div>
+
+                 
+                </div>
+
+                
+        </div>
+        <button class="slide-button left" onclick="slide(-1)">&#8249;</button>
+        <button class="slide-button right" onclick="slide(1)">&#8250;</button>
+    </section>
+
+    <div id="imageModal" class="modal">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+                <img id="modalImage">
+                <div id="modalDetails" class="modal-details">
+                        <h3 id="modalTitle"></h3>
+                        <p id="modalDescription"></p>
+                        <p id="modalPrice"></p>
+                </div>
+        </div>
+    </div>
+
+    <script>
+        const toursContainer = document.querySelector('.tours-container');
+        const tourCards = document.querySelectorAll('.tour-card');
+        let currentIndex = 0;
+        let intervalId;
+        const scrollDelay = 3000; // Time in milliseconds between slides
+        const modal = document.getElementById("imageModal");
+        const modalImage = document.getElementById("modalImage");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalDescription = document.getElementById("modalDescription");
+        const modalPrice = document.getElementById("modalPrice");
+
+        function scrollToCard(index) {
+                toursContainer.scrollLeft = tourCards[index].offsetLeft;
+        }
+
+        function nextSlide() {
+                currentIndex = (currentIndex + 1) % tourCards.length;
+                scrollToCard(currentIndex);
+        }
+
+        function prevSlide() {
+                currentIndex = (currentIndex - 1 + tourCards.length) % tourCards.length;
+                scrollToCard(currentIndex);
+        }
+
+        function startAutoSlide() {
+                intervalId = setInterval(nextSlide, scrollDelay);
+        }
+
+        function stopAutoSlide() {
+                clearInterval(intervalId);
+        }
+
+        // Start auto slide on load
+        startAutoSlide();
+
+        // Pause auto slide on hover
+        toursContainer.addEventListener('mouseenter', stopAutoSlide);
+        toursContainer.addEventListener('mouseleave', startAutoSlide);
+
+        function showDetails(card) {
+                const infoParagraph = card.querySelector('.tour-info p');
+                const readMoreButton = card.querySelector('.read-more-btn');
+
+                if (infoParagraph.classList.contains('visible')) {
+                        infoParagraph.classList.remove('visible');
+                        readMoreButton.textContent = 'Read More';
+                } else {
+                        document.querySelectorAll('.tour-info p.visible').forEach(p => {
+                                p.classList.remove('visible');
+                                p.parentNode.querySelector('.read-more-btn').textContent = 'Read More';
+                        });
+                        infoParagraph.classList.add('visible');
+                        readMoreButton.textContent = 'Read Less';
+                }
+        }
+
+        function slide(direction) {
+                stopAutoSlide(); // Stop auto-sliding when manual navigation occurs
+                currentIndex = (currentIndex + direction + tourCards.length) % tourCards.length;
+                scrollToCard(currentIndex);
+                setTimeout(startAutoSlide, scrollDelay + 10000); // Resume auto-sliding after a delay
+        }
+
+        function openModal(imageSrc, title, description, price) {
+                modal.style.display = "block";
+                modalImage.src = imageSrc;
+                modalTitle.textContent = title;
+                modalDescription.textContent = description;
+                modalPrice.textContent = price;
+        }
+
+        function closeModal() {
+                modal.style.display = "none";
+        }
+
+        // Close modal if the user clicks outside of it
+        window.onclick = function(event) {
+                if (event.target == modal) {
+                        closeModal();
+                }
+        }
+    </script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zurhu Expedition Adventures Booking</title>
+    <style>
+        .booking-section {
+            background: #ffffff;
+            padding: 60px 20px;
+            max-width: 700px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            /* Styles for the container if needed */
+        }
+
+        h2 {
+            color: #ff6600;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer; /* Indicate it's clickable */
+        }
+
+        .mpesa-note {
+            background-color: #e6fff1;
+            color: #006633;
+            border-left: 4px solid #00cc66;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        label {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+            display: block; /* Ensure labels are on their own line */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            margin-top: 5px;
+            width: calc(100% - 22px); /* Adjust width for padding and border */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
+
+        button[type="submit"] {
+            margin-top: 25px;
+            background-color: #00cc66;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background 0.3s ease;
+            width: 100%; /* Make the button full width */
+        }
+
+        button[type="submit"]:hover {
+            background-color: #00994d;
+        }
+
+        #booking-form {
+            display: none; /* Initially hide the form */
+            margin-top: 20px;
+        }
+
+        #confirmation-message {
+            display: none;
+            color: #00cc66;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<section class="booking-section" id="booking">
+    <div class="container">
+        <h2 style="color: #ff6600; text-align: center; margin-bottom: 20px; cursor: pointer;" onclick="toggleBookingForm()">Book Your Adventure</h2>
+        <p class="mpesa-note" style="background-color: #e6fff1; color: #006633; border-left: 4px solid #00cc66; padding: 15px; border-radius: 8px; margin-bottom: 25px; text-align: center; font-size: 15px;">
+            Open to confirm your booking, kindly pay via MPesa:
+            <br><strong>Paybill:</strong> 542542 &nbsp; | &nbsp; <strong>Account:</strong> 516286
+        </p>
+
+        <form id="booking-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="return showConfirmation()" style="display: flex; flex-direction: column;">
+            <label for="fullname">Full Name</label>
+            <input type="text" name="fullname" id="fullname" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" name="phone" id="phone" required>
+
+            <label for="trip">Choose a Trip</label>
+            <select name="trip" id="trip" required>
+                <option value="">--Select--</option>
+                <option value="Camp Ndunda">Camp Ndunda</option>
+		<option value="Vintage buddies">Vintage buddies</option>
+		<option value="Twende Mombasa">Twende Mombasa</option>
+		<option value="suswa">Mt. Suswa Hike</option>
+                <option value="Mt.Longonot">Mt.Longonot</option>
+                <option value="Road trip">Namanga Road trip</option>
+		<option value="Forest">Karura Forest</option>
+		<option value="castle">Castle Forest</option>
+            </select>
+
+            <label for="date">Preferred Date</label>
+            <input type="date" name="date" id="date" required>
+
+            <label for="mpesa-code">MPesa Transaction Code</label>
+            <input type="text" name="mpesa-code" id="mpesa-code" required>
+
+            <button type="submit">Submit Booking</button>
+        </form>
+
+        <p id="confirmation-message" style="display:none; color: #00cc66; font-weight: bold; margin-top: 20px; text-align: center; font-size: 16px;">
+            Thank you! Your booking has been submitted. We’ll contact you shortly!
+        </p>
+    </div>
+</section>
+
+<script>
+    document.getElementById("booking-form").style.display = "none"; // Ensure form is initially hidden
+
+    function toggleBookingForm() {
+        const bookingForm = document.getElementById("booking-form");
+        bookingForm.style.display = bookingForm.style.display === "none" ? "flex" : "none";
+    }
+
+    function showConfirmation() {
+        document.getElementById("confirmation-message").style.display = "block";
+        document.getElementById("booking-form").style.display = "none"; // Hide the form after submission
+        return true;
+    }
+</script>
+
+</body>
+</html>
+
+
+
+</body>
+</html>
+<section id="merch-services">
+            <h2>MERCHANDISE & OTHER SERVICES</h2>
+            <div style="margin-bottom: 30px; text-align: center;">Explore our exclusive Zurhu Expedition Adventures merchandise and discover our additional travel-related services.</div>
+
+            <h3>Our Awesome Merch</h3>
+            <div class="merch-services-container">
+                <div class="merch-slide">
+                    <img src="tshirt1.jpg" alt="Zuru T-Shirt">
+		   <img src="tshirt3.jpg" alt="Zuru T-Shirt">
+                    <h4>Adventure T-Shirt</h4>
+                    <p>Show your love for adventure with our comfy T-shirt.</p>
+                </div>
+                <div class="merch-slide">
+                    <img src="cap.jpg" alt="Zuru Cap">
+                    <h4>Explorer Cap</h4>
+                    <p>Keep the sun out of your eyes on your next expedition.</p>
+                </div>
+                <div class="merch-slide">
+                    <img src="mug.jpg" alt="Zuru Mug">
+                    <h4>Wanderlust Tumbler/Cups</h4>
+                    <p>Enjoy your favorite beverage with a touch of adventure.</p>
+                </div>
+                <div class="merch-slide">
+                    <img src="pen.jpg" alt="Zuru Backpack" >
+                    <h4>Adventure pen</h4>
+                    <p>Carry your essentials in style and comfort.</p>
+                </div>
+                </div>
+        
+                </div>
+        </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services Offered</title>
+</head>
+<body>
+<section id="services" class="services-section" style="background-color: #f8f9fa; padding: 60px 20px; text-align: center;">
+    <h2 style="font-size: 2.5em; margin-bottom: 40px; color: #222;">Services Offered</h2>
+    <div class="services-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto;">
+
+        <div class="service-card" style="background: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; text-align: left;">
+            <img src="https://images.unsplash.com/photo-1710608175248-b2372ecf07d4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Airport Transfers" style="width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.4em; color: #007B5E; margin-bottom: 10px;">Airport Transfers</h3>
+            <p style="font-size: 1em; color: #555; line-height: 1.6;">Start or end your journey stress-free with our reliable airport transfer services. We offer timely pickups and drop-offs to and from major airports in comfortable, air-conditioned vehicles.</p>
+        </div>
+
+        <div class="service-card" style="background: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; text-align: left;">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Hotel Bookings" style="width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.4em; color: #007B5E; margin-bottom: 10px;">Hotel Bookings</h3>
+            <p style="font-size: 1em; color: #555; line-height: 1.6;">Let us take the hassle out of finding the perfect stay. We partner with top-rated hotels across the region to match your preferences and budget.</p>
+        </div>
+
+        <div class="service-card" style="background: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; text-align: left;">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Custom Tour Bookings" style="width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.4em; color: #007B5E; margin-bottom: 10px;">Custom Tour Bookings</h3>
+            <p style="font-size: 1em; color: #555; line-height: 1.6;">Dream it, and we'll plan it! From solo getaways to group adventures, we create tailor-made tours based on your interests and budget.</p>
+        </div>
+
+        <div class="service-card" style="background: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; text-align: left;">
+            <img src="https://images.unsplash.com/photo-1729962008077-f25a1b039901?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Guided Tours & Excursions" style="width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.4em; color: #007B5E; margin-bottom: 10px;">Guided Tours & Excursions</h3>
+            <p style="font-size: 1em; color: #555; line-height: 1.6;">Discover Kenya and beyond through immersive travel experiences—wildlife safaris, cultural tours, and nature walks led by expert guides.</p>
+        </div>
+
+        <div class="service-card" style="background: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; text-align: left;">
+            <img src="https://dynamic-media.tacdn.com/media/photo-o/2e/d3/e0/80/caption.jpg?w=800&h=600&s=1" style="width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.4em; color: #007B5E; margin-bottom: 10px;">Comfortable Travel Vehicles</h3>
+            <p style="font-size: 1em; color: #555; line-height: 1.6;">Travel in style in our well-maintained vans, tour buses, and SUVs equipped with modern amenities for individuals and groups.</p>
+        </div>
+
+        <div class="service-card" style="background: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; text-align: left;">
+            <img src="https://images.unsplash.com/photo-1713376346740-c341f5e5c628?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fENvcnBvcmF0ZSUyMCUyNiUyMEdyb3VwJTIwVHJhdmVsJTIwdG91cnN8ZW58MHx8MHx8fDI%3D" alt="Corporate & Group Travel" style="width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.4em; color: #007B5E; margin-bottom: 10px;">Corporate & Group Travel</h3>
+            <p style="font-size: 1em; color: #555; line-height: 1.6;">We organize seamless travel for corporate teams, schools, and other groups—combining comfort, coordination, and cost-efficiency.</p>
+        </div>
+
+        <div class="service-card" style="background: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; text-align: left;">
+            <img src="https://a0.muscache.com/im/pictures/miso/Hosting-9287952/original/c9656250-df6b-4de5-b88a-3acf66835a25.jpeg?im_w=720" alt="BnB Bookings and Allocation" style="width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.4em; color: #007B5E; margin-bottom: 10px;">BnB Bookings and Allocation</h3>
+            <p style="font-size: 1em; color: #555; line-height: 1.6;">Discover unique and comfortable stays with our wide selection of Bed and Breakfast options, tailored to your location and preferences.</p>
+        </div>
+    </div>
+</section>
+
+    </div>
+</section>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zurhu Expedition Adventures - Explore the World with Us</title>
+    <style>
+        /* Previous styles remain the same until the gallery section */
+
+        /* Gallery Section */
+        .gallery-wrapper {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+    scroll-snap-type: x mandatory; /* Optional: Snap items to the viewport */
+}
+
+.gallery-container {
+    display: flex; /* Arrange gallery items horizontally */
+    animation: scrollGallery 20s linear infinite; /* Apply the animation */
+}
+
+.gallery-item {
+    flex-shrink: 0; /* Prevent items from shrinking */
+    /* Option 1: Fixed width for gallery items (adjust as needed) */
+    width: 300px;
+    margin-right: 20px; /* Adjust spacing between items */
+    scroll-snap-align: start; /* Optional: Snap to the start of each item */
+    overflow: hidden; /* Clip images that don't fit the container */
+    height: 200px; /* Option 1: Fixed height for gallery items (adjust as needed) */
+}
+
+.gallery-item:last-child {
+    margin-right: 0; /* Remove margin from the last item */
+}
+
+.gallery-img {
+    display: block; /* Prevent extra space below the image */
+    width: 100%; /* Make the image scale to fit the width of the container */
+    height: 100%; /* Make the image scale to fit the height of the container */
+    object-fit: cover; /* Maintain aspect ratio and cover the entire container */
+}
+
+@keyframes scrollGallery {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%); /* Scroll to the end */
+    }
+}
+
+/* Optional: Adjust gallery item dimensions for different screen sizes */
+@media (max-width: 768px) { /* For tablets and smaller screens */
+    .gallery-item {
+        width: 200px; /* Adjust as needed */
+        height: 150px; /* Adjust as needed */
+    }
+}
+
+@media (max-width: 480px) { /* For mobile phones */
+    .gallery-item {
+        width: 150px; /* Adjust as needed */
+        height: 100px; /* Adjust as needed */
+        margin-right: 10px; /* Adjust spacing for smaller screens */
+    }
+}
+        
+        /* The rest of your existing styles remain the same */
+    </style>
+</head>
+<body>
+    <!-- Your existing header, nav, and other sections remain the same until the gallery section -->
+
+        <
+
+
+        
+        <!-- New Gallery Section -->
+  <section id="gallery" class="gallery">
+    <h2>ZURHU EXPEDITION ADVENTURES GALLERY</h2>
+    <p style="text-align: center; margin-bottom: 30px;">A glimpse of our unforgettable adventures</p>
+
+    <div class="gallery-wrapper"> <div class="gallery-container">
+            <div class="gallery-item" onclick="openLightbox('1.jpg')">
+                <img src="0.jpg" alt="Zuru Adventure" class="gallery-img">
+                <div class="gallery-caption">Vintage Buddies Tour</div>
+            </div>
+
+            <div class="gallery-item" onclick="openLightbox('mombasa.jpg')">
+                <img src="1.jpg" alt="Twende Mombasa" class="gallery-img">
+                <div class="gallery-caption">Twende Mombasa Trip</div>
+            </div>
+
+            <div class="gallery-item" onclick="openLightbox('machakos.jpg')">
+                <img src="2.jpg" alt="Children Home Visit" class="gallery-img">
+                <div class="gallery-caption">Children Home Visit</div>
+            </div>
+
+            <div class="gallery-item" onclick="openLightbox('camp.jpg')">
+                <img src="3.jpg" alt="Camp Ndunda" class="gallery-img">
+                <div class="gallery-caption">Camp Ndunda Adventure</div>
+            </div>
+
+            <div class="gallery-item" onclick="openLightbox('group1.jpg')">
+                <img src="4.jpg" alt="Group Adventure" class="gallery-img">
+                <div class="gallery-caption">Group Adventure</div>
+            </div>
+
+            <div class="gallery-item" onclick="openLightbox('nature1.jpg')">
+                <img src="5.jpg" alt="Nature Exploration" class="gallery-img">
+                <div class="gallery-caption">Nature Exploration</div>
+            </div>
+
+            <div class="gallery-item" onclick="openLightbox('fun1.jpg')">
+                <img src="6.jpg" alt="Fun Moments" class="gallery-img">
+                <div class="gallery-caption">Fun Moments</div>
+            </div>
+
+            <div class="gallery-item" onclick="openLightbox('team1.jpg')">
+                <img src="7.jpg" alt="Zuru Team" class="gallery-img">
+                <div class="gallery-caption">Our Amazing Team</div>
+            </div>
+
+            <div class="gallery-item" onclick="openLightbox('team1.jpg')">
+                <img src="8.jpg" alt="Zuru Team" class="gallery-img">
+                <div class="gallery-caption">Our Amazing Team</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('fun1.jpg')">
+                <img src="9.jpg" alt="Fun Moments" class="gallery-img">
+                <div class="gallery-caption">Fun Moments</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('fun1.jpg')">
+                <img src="10.jpg" alt="Fun Moments" class="gallery-img">
+                <div class="gallery-caption">Fun Moments</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('fun1.jpg')">
+                <img src="11.jpg" alt="Fun Moments" class="gallery-img">
+                <div class="gallery-caption">Fun Moments</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('fun1.jpg')">
+                <img src="12.jpg" alt="Fun Moments" class="gallery-img">
+                <div class="gallery-caption">Fun Moments</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('fun1.jpg')">
+                <img src="13.jpg" alt="Fun Moments" class="gallery-img">
+                <div class="gallery-caption">Fun Moments</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('fun1.jpg')">
+                <img src="14.jpg" alt="Fun Moments" class="gallery-img">
+                <div class="gallery-caption">Fun Moments</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('fun1.jpg')">
+                <img src="15.jpg" alt="Fun Moments" class="gallery-img">
+                <div class="gallery-caption">Fun Moments</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('fun1.jpg')">
+                <img src="16.jpg" alt="Fun Moments" class="gallery-img">
+                <div class="gallery-caption">Fun Moments</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('fun1.jpg')">
+                <img src="17.jpg" alt="Fun Moments" class="gallery-img">
+                <div class="gallery-caption">Fun Moments</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+        
+        
+        
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <div class="contact-form">
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tour">Interested In:</label>
+                        <select id="tour" name="tour">
+                            <option value="">Select your interest</option>
+                            <option value="safari">Tours</option>
+                            <option value="camp">Guided Adventure</option>
+                            <option value="Car">Car hire</option>
+                            <option value="BnB">BnB Services</option>
+                            <option value="merch xuru">Merch</option>
+                            <option value="Soon">Etc. </option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    
+    
+</div>
+
+<a href="https://wa.me/254792516286"
+   class="whatsapp-float"
+   target="_blank"
+   title="Chat with us on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="60" height="60" viewBox="0 0 48 48"
+         class="whatsapp-icon">
+      <path fill="#25D366" d="M4.868 42.373l2.846-10.445A17.596 17.596 0 012.4 22.282C2.4 11.373 11.773 2 22.682 2c10.91 0 19.783 8.873 19.783 19.782 0 10.91-8.873 19.782-19.782 19.782a19.725 19.725 0 01-9.032-2.194L4.868 42.373z"/>
+      <path fill="#FFF" d="M17.517 14.646c-.296-.658-.605-.671-.888-.682-.229-.01-.492-.01-.755-.01s-.693.099-1.06.493c-.364.394-1.396 1.364-1.396 3.328s1.43 3.857 1.63 4.125c.2.263 2.723 4.28 6.705 5.828 3.319 1.316 4.027 1.042 4.753.979.725-.066 2.34-.955 2.671-1.878.329-.922.329-1.713.23-1.878-.099-.164-.364-.263-.755-.46-.39-.197-2.34-1.15-2.701-1.282-.36-.132-.623-.197-.888.197-.263.395-1.01 1.282-1.242 1.547-.229.263-.46.296-.85.099-.39-.198-1.645-.605-3.136-1.929-1.159-1.033-1.938-2.311-2.171-2.704-.23-.395-.025-.593.173-.79.177-.175.39-.46.586-.692.197-.231.263-.395.395-.66.131-.263.066-.493-.033-.692-.099-.197-.89-2.188-1.243-2.988z"/>
+    </svg>
+</a>
+
+<style>
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    /* Adjust right to position at quarters */
+    right: calc(15% + 20px); /* 15% from the right, plus original 20px */
+    z-index: 1000; /* Ensure it stays on top of other elements */
+    /* Basic bouncing animation */
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+.whatsapp-icon {
+    width: 60px;
+    height: 60px;
+}
+</style>
+</body>
+</html>
+
+       <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zurhu Expedition Adventures.... Footer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<footer class="footer" style="background-color: #0a0a0a; color: #fff; padding: 50px 20px 20px; font-family: 'Segoe UI', sans-serif;">
+    <div class="footer-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; max-width: 1200px; margin: auto;">
+
+        <div class="footer-brand">
+            <h2 style="color: #ff6600; margin-bottom: 10px;">Zurhu Expedition Adventures</h2>
+            <p>Explore. Connect. Experience.</p>
+        </div>
+
+        <div class="footer-links">
+            <h4 style="color: #00cc66; margin-bottom: 15px;">Quick Links</h4>
+            <ul>
+                <li><a href="#about" style="color: #eee; text-decoration: none; display: block; margin-bottom: 8px; transition: color 0.3s ease;">About</a></li>
+                <li><a href="#trips" style="color: #0bd437; text-decoration: none; display: block; margin-bottom: 8px; transition: color 0.3s ease;">Trips</a></li>
+                <li><a href="#services" style="color: #eee; text-decoration: none; display: block; margin-bottom: 8px; transition: color 0.3s ease;">Services</a></li>
+                <li><a href="#contact" style="color: #eee; text-decoration: none; display: block; margin-bottom: 8px; transition: color 0.3s ease;">Contact</a></li>
+                <li><a href="#privacy" style="color: #eee; text-decoration: none; display: block; margin-bottom: 8px; transition: color 0.3s ease;">Privacy Policy</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h4 style="color: #00cc66; margin-bottom: 15px;">Contact Us</h4>
+            <p style="margin: 6px 0;"><strong>Phone:</strong> +254 792 516 286/+254 710 843 004 </p>
+            <p style="margin: 6px 0;"><strong>Email:</strong> Zuruadventuresafaris@gmail.com</p>
+            <p style="margin: 6px 0;"><strong>Location:</strong> Nairobi, Kenya</p>
+        </div>
+
+        <div class="footer-social">
+            <h4 style="color: #00cc66; margin-bottom: 15px;">Follow Us</h4>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=100066546695713" target="_blank" style="font-size: 20px; margin-right: 15px; color: #ccc; transition: color 0.3s ease;"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/zuru.adventures" target="_blank" style="font-size: 20px; margin-right: 15px; color: #ccc; transition: color 0.3s ease;"><i class="fab fa-instagram"></i></a>
+                <a href="https://twitter.com/zuruadventures" target="_blank" style="font-size: 20px; margin-right: 15px; color: #ccc; transition: color 0.3s ease;"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.tiktok.com/@zuruadventures?_t=ZM-8vzaDOA7QjF&_r=1" target="_blank" style="font-size: 20px; margin-right: 15px; color: #ccc; transition: color 0.3s ease;"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom" style="text-align: center; border-top: 1px solid #444; margin-top: 30px; padding-top: 15px; font-size: 14px; color: #aaa;">
+        <p>© 2025 Zurhu Expedition Adventures. All rights reserved | <a href="#privacy" style="color: #ff6600; margin-left: 5px;">Privacy Policy</a></p>
+    </div>
+</footer>
+
+</body>
+</html>
